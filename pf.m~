@@ -36,8 +36,6 @@ classdef pf<handle
             % r. This function assumes that the first three indicies of each
             % particle contain (x,y,theta)
             % 
-            %initRobot(pose,maxRange)
-            %
             % pose: Inital pose of the robot given in the form
             %   (x,y,theta)
             % maxRange: The maximum distance away from pose (x,y) that a
@@ -66,8 +64,6 @@ classdef pf<handle
             % for a single landmark with partiels of the form (x,y). Based
             % on the option selected the particels will be initated in a
             % donut shape around a range, or a cirlce around a landmark.
-            %
-            % initLandmarkParticleFilter(pose,range,spread,option)
             %
             % pose: x,y coordinates. When used with donut option this
             %   variable should be the location from which the range
@@ -224,13 +220,6 @@ classdef pf<handle
             % particle filter containing both robot position and landmark
             % positions of the form:
             % rx,ry,rtheta,lx1,ly1,lx2,ly2,...,lxn,lyn
-            % 
-            % measuredRange: array of range measurments between robot and
-            % landmark
-            % idx: index of the landmark a measurment was received from,
-            %   indexes are of the form (1,2,3,4)
-            
-            
             x_r=obj.particles(:,1);
             y_r=obj.particles(:,2);
             x_lm=obj.particles(:,2+lmIDX*2);
@@ -263,29 +252,9 @@ classdef pf<handle
             
         end
         
-        function initLandmarkForRobotAndLandmark(obj,startPoint,idx,range,spread,option)
-            % initLandmarkForRobotAndLandmark: Horrible name for a function
-            % that initalizes landmarks in a particle filter, with robot 
-            % position and landmark positions ,that is of the
-            % form rx,ry,rtheta,lx1,ly1,lx2,ly2,...,lxn,lyn
-            % 
-            % You should technically be able to use an array of
-            % startPoints, idxs, ranges, and spreads... however this has
-            % never been tested. 
-            %
-            % initLandmarkForRobotAndLandmark(startPoint,idx,range,spread,option)
-            %
-            % pose: x,y coordinates. When used with donut option this
-            %   variable should be the location from which the range
-            %   measurment was gathered. When used with teh circle option
-            %   this variable represents the location from which the range
-            %   measurment originated. 
-            % range: The range measurment 
-            % spread: The amount of spread from the range in which
-            %   particles should spawn 
-            % option: donut or circle based init
-            
-            
+        function initLandmarkFull(obj,startPoint,idx,range,spread,option)
+            %Initalize landmark particle in a donut shape with a given
+            %range and spread around a pose.
             
             if(strcmp(option,'donut'))
                 rMin=range-spread;
